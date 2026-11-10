@@ -4,7 +4,7 @@ from .models import StatusEvent
 
 ALLOWED_TRANSITIONS = {
     "requested": {"approved", "rejected", "cancelled"},
-    "approved": {"received"},
+    "approved": {"received", "cancelled"},
     "received": {"refunded"},
     "refunded": set(),
     "rejected": set(),

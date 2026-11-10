@@ -7,7 +7,7 @@ REASONS = ["damaged", "wrong_item", "not_needed", "other"]
 class ReturnRequest(models.Model):
     customer = models.CharField(max_length=120)
     order_number = models.CharField(max_length=40)
-    reason = models.CharField(max_length=20, default="not_needed")
+    reason = models.CharField(max_length=20, default="other")
     note = models.TextField(blank=True, default="")
     status = models.CharField(max_length=20, default="requested")
     refund_total_cents = models.PositiveIntegerField(default=0)

@@ -5,12 +5,14 @@ from .models import ReturnRequest
 ORDERINGS = {
     "newest": ("-id",),
     "oldest": ("id",),
-    "refund_desc": ("refund_total_cents", "id"),
+    "refund_desc": ("-refund_total_cents", "id"),
 }
 
 
 def filter_returns(params):
-    returns = ReturnRequest.objects.exclude(status="cancelled")
+    returns = ReturnRequest.objects.all()
+    if params.get("status") != "cancelled":
+        returns = returns.exclude(status="cancelled")
     if params["status"]:
         returns = returns.filter(status=params["status"])
     if params["reason"]:
@@ -19,8 +21,8 @@ def filter_returns(params):
         term = params["q"]
         returns = returns.filter(
             Q(customer__icontains=term)
-            & Q(order_number__icontains=term)
-            & Q(note__icontains=term)
+            | Q(order_number__icontains=term)
+            | Q(note__icontains=term)
         )
     return returns
 

@@ -13,7 +13,7 @@ class ValidationFailed(Exception):
 
 def _required_text(data, field):
     value = data.get(field)
-    if not isinstance(value, str) or not value:
+    if not isinstance(value, str) or not value.strip():
         raise ValidationFailed(f"{field} is required")
     return value.strip()
 
@@ -74,7 +74,7 @@ def parse_list_params(params):
         raise ValidationFailed(f"sort must be one of {SORT_OPTIONS}")
     try:
         limit = int(params.get("limit", DEFAULT_LIMIT))
-        offset = int(params.get("skip", 0))
+        offset = int(params.get("offset", 0))
     except ValueError:
         raise ValidationFailed("limit and offset must be integers")
     if limit < 1 or limit > MAX_LIMIT:

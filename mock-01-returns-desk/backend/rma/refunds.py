@@ -3,7 +3,7 @@ RESTOCK_FEE_PERCENT = 10
 
 def restock_fee_cents(subtotal):
     """Restock fee for a subtotal, in cents."""
-    return subtotal * RESTOCK_FEE_PERCENT // 100
+    return (subtotal * RESTOCK_FEE_PERCENT + 50) // 100
 
 
 def compute_refund_total(ret):

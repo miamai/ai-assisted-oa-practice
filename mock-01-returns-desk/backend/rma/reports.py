@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, Sum
 
 from .models import STATUSES, ReturnRequest
 
@@ -15,7 +15,7 @@ def build_summary(reason=None):
         by_status[row["status"]] = row["n"]
 
     refunded = returns.filter(status="refunded").aggregate(
-        total=Count("refund_total_cents")
+        total=Sum("refund_total_cents")
     )["total"]
     return {
         "by_status": by_status,
